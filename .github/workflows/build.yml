@@ -1,0 +1,32 @@
+name: build
+
+on:
+  workflow_call:
+
+jobs:
+  codeql:
+    uses: onecx-apps/ci-python/.github/workflows/python-codeql.yml@v1
+    secrets: inherit
+  python:
+    uses: onecx-apps/ci-python/.github/workflows/python-build.yml@v1
+    secrets: inherit
+  docker:
+    uses: onecx-apps/ci-common/.github/workflows/docker-build.yml@v1
+    needs: python
+    secrets: inherit
+    with:
+      tags: '{{ .Version }},{{ .Branch }}'
+      push: true
+      samoDockerFile: Dockerfile
+  sonar:
+    uses: onecx-apps/ci-python/.github/workflows/python-sonar.yml@v1
+    needs: docker
+    secrets: inherit
+  helm:
+    uses: onecx-apps/ci-common/.github/workflows/helm-build.yml@v1
+    needs: docker
+    secrets: inherit
+    with:
+      push: true
+      helmDir: 'helm'
+      
