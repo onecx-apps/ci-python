@@ -3,11 +3,11 @@ name: sonar
 on:
   workflow_call:
     inputs:
-      node:
-        description: 'Node version'
-        default: '16'
+      python:
+        description: 'python version'
+        default: '3.10'
         required: false
-        type: string
+        type: string 
       artifact:
         description: 'Name of the artifact for the build'
         default: 'package'

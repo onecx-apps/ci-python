@@ -17,8 +17,8 @@ jobs:
     # Initializes the CodeQL tools for scanning.
     - uses: github/codeql-action/init@v2
       with:
-        languages: 'javascript'
+        languages: 'python'
     - uses: github/codeql-action/autobuild@v2
     - uses: github/codeql-action/analyze@v2
       with:
-        category: "/language:javascript"
+        category: "/language:python"
