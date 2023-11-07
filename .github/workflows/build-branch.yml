@@ -4,9 +4,9 @@ on:
   workflow_call:
 
 jobs:
-  code-ql:
-    uses: onecx-apps/ci-python/.github/workflows/python-codeql.yml@v1
-    secrets: inherit
+#  code-ql:
+#    uses: onecx-apps/ci-python/.github/workflows/python-codeql.yml@v1
+#    secrets: inherit
   python:
     uses: onecx-apps/ci-python/.github/workflows/python-build.yml@v1
     secrets: inherit
@@ -17,9 +17,9 @@ jobs:
     with:
       tags: '{{ .Branch }}'
       samoDockerFile: Dockerfile
-  helm:
-    uses: onecx-apps/ci-common/.github/workflows/helm-build.yml@v1
-    needs: docker
-    secrets: inherit
-    with:
-      helmDir: 'helm'
+#  helm:
+#    uses: onecx-apps/ci-common/.github/workflows/helm-build.yml@v1
+#    needs: docker
+#    secrets: inherit
+#    with:
+#      helmDir: 'helm'
