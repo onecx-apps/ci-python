@@ -1,4 +1,4 @@
-name: angular
+name: python
 
 on:
   workflow_call:
@@ -21,7 +21,7 @@ on:
 
 jobs:
   npm:
-    name: npm build and test
+    name: python build and test
     runs-on: ubuntu-latest
     env:
       QUARKUS_CONTAINER_IMAGE_REGISTRY: 'ghcr.io'
@@ -39,7 +39,7 @@ jobs:
         fetch-depth: 0
     # setup python
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.python }}
     # login to github docker registry in the organization
@@ -49,21 +49,21 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     # update project version    
-    - name: Set project version
-      run: |
-        VERSION=$(samo project version)
-        npm version --no-git-tag-version $VERSION    
-    - name: Dependencies
-      run: npm install
-    # Check the project        
-    - name: Check project
-      run: npm run lint    
-    # Build the project
-    - name: Build project
-      run: npm run build
-    # Test the project     
-    - name: Test project
-      run: npm run test:ci
+#    - name: Set project version
+#      run: |
+#        VERSION=$(samo project version)
+#        npm version --no-git-tag-version $VERSION    
+#    - name: Dependencies
+#      run: npm install
+#    # Check the project        
+#    - name: Check project
+#      run: npm run lint    
+#    # Build the project
+#    - name: Build project
+#      run: npm run build
+#    # Test the project     
+#    - name: Test project
+#      run: npm run test:ci
     # store github action pr number to file  
     - name: Create sonar json file
       if: github.event_name == 'pull_request'
@@ -79,8 +79,12 @@ jobs:
       with:
         name: package
         path: |
-            package.json      
-            dist/
-            coverage/
+            requirements.txt
+#            gui.py
+#            agent/
+#            config/
+#            prompts/
+#            resources/
+#            src/main/docker/
         retention-days: 1
         if-no-files-found: ignore
